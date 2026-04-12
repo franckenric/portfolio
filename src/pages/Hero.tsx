@@ -31,7 +31,7 @@ export function Hero({ lang }: HeroProps) {
       downloadCv: "Telecharger le CV",
       quickLinks: "Liens rapides",
       email: "Envoyer un email",
-      role: "Développeur Full Stack Senior",
+      role: "Développeur Full Stack",
       contactInfo: "Coordonnees",
       strongDomains:
         "Specialites: ERP metier, plateformes photovoltaiques, automatisation de workflows, integration de services tiers et generation de PDF dynamiques.",
@@ -45,7 +45,7 @@ export function Hero({ lang }: HeroProps) {
       downloadCv: "Download resume",
       quickLinks: "Quick links",
       email: "Send email",
-      role: "Senior Full Stack Developer",
+      role: "Full Stack Developer",
       contactInfo: "Contact details",
       strongDomains:
         "Focus areas: business ERP, photovoltaic platforms, workflow automation, third-party service integration, and dynamic PDF generation.",
