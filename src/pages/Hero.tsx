@@ -84,7 +84,7 @@ export function Hero({ lang }: HeroProps) {
   }, []);
 
   return (
-    <section ref={containerRef} id="hero" className="reveal section-frame soft-spotlight relative overflow-hidden px-4 pb-20 pt-16 sm:pt-24">
+    <section ref={containerRef} id="hero" className="reveal section-frame soft-spotlight relative overflow-hidden px-4 pb-12 pt-12 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24 lg:pb-20 lg:pt-28">
       <div
         className="pointer-events-none absolute inset-0 hidden transition-transform duration-300 lg:block"
         style={{
@@ -95,26 +95,26 @@ export function Hero({ lang }: HeroProps) {
       />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,#93c5fd33,transparent_50%),radial-gradient(circle_at_bottom_left,#06b6d433,transparent_45%)] lg:hidden" />
 
-      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+      <div className="relative mx-auto grid w-full max-w-6xl gap-6 sm:gap-8 lg:gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
         <div className="reveal reveal-delay-1 lg:self-start">
           <Badge variant="outline" className="mb-4 rounded-full border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
             <Sparkles className="mr-1 h-3.5 w-3.5" />
             {t[lang].available}
           </Badge>
 
-          <h1 className="text-balance text-4xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
+          <h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
             {t[lang].headline}
           </h1>
 
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base md:text-lg">
             {t[lang].intro}
           </p>
 
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-base">
+          <p className="mt-3 max-w-2xl text-xs leading-relaxed text-slate-500 dark:text-slate-400 sm:text-sm md:text-base">
             {t[lang].strongDomains}
           </p>
 
-          <div className="stagger-grid mt-6 flex flex-wrap gap-2">
+          <div className="stagger-grid mt-5 flex flex-wrap gap-1.5 sm:gap-2">
             <Badge variant="secondary">FastAPI</Badge>
             <Badge variant="secondary">React</Badge>
             <Badge variant="secondary">TypeScript</Badge>
@@ -123,21 +123,21 @@ export function Hero({ lang }: HeroProps) {
             <Badge variant="secondary">Automation</Badge>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild className="gap-2 rounded-full">
+          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3">
+            <Button asChild className="gap-2 rounded-full text-sm sm:text-base">
               <a href="#projects">
                 {t[lang].projects}
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
-            <Button variant="outline" asChild className="rounded-full">
+            <Button variant="outline" asChild className="rounded-full text-sm sm:text-base">
               <a href={cvFile} target="_blank" rel="noreferrer">{t[lang].downloadCv}</a>
             </Button>
           </div>
 
-          <div className="mt-6 pb-8">
+          <div className="mt-5 pb-4 sm:pb-8">
             {/* <p className="mb-3 text-xs uppercase tracking-[0.2em] text-slate-500">{t[lang].quickLinks}</p> */}
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-1.5 sm:gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <a
                 href={GITHUB_URL}
                 target="_blank"
@@ -188,50 +188,50 @@ export function Hero({ lang }: HeroProps) {
           >
             <div className="relative group">
               {/* Decorative elements behind image */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500"></div>
               
               {/* Profile image container */}
-              <div className="relative bg-white dark:bg-slate-800 rounded-3xl p-1.5 shadow-2xl">
-                <div className="overflow-hidden rounded-2xl">
+              <div className="relative bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-1 sm:p-1.5 shadow-2xl">
+                <div className="overflow-hidden rounded-xl sm:rounded-2xl">
                   <img
                     src={profilePic}
                     alt={PROFILE_NAME}
-                    className="w-full h-[400px] lg:h-[500px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 
                 {/* Overlay info card */}
-                <div className="absolute bottom-6 left-6 right-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg border border-slate-200 dark:border-slate-700">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white">
                     {PROFILE_NAME}
                   </h3>
-                  <p className="text-sm text-blue-600 dark:text-blue-400 font-medium flex items-center gap-1.5">
-                    <Briefcase className="h-3.5 w-3.5" />
+                  <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium flex items-center gap-1">
+                    <Briefcase className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                     {t[lang].role}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            <div className="mt-4 sm:mt-6 rounded-xl sm:rounded-2xl border border-slate-200 bg-white/90 p-3 sm:p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
+              <p className="mb-2.5 sm:mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                 {t[lang].contactInfo}
               </p>
-              <div className="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
-                <div className="flex items-center gap-2.5">
-                  <Phone className="h-4 w-4 text-blue-600" />
-                  <span>{CONTACT_PHONE_DISPLAY}</span>
+              <div className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                  <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
+                  <span className="truncate">{CONTACT_PHONE_DISPLAY}</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <Mail className="h-4 w-4 text-blue-600" />
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-blue-600 dark:hover:text-blue-400">
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                  <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="truncate transition-colors hover:text-blue-600 dark:hover:text-blue-400">
                     {CONTACT_EMAIL}
                   </a>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <MapPin className="h-4 w-4 text-blue-600" />
-                  <span>{CONTACT_LOCATION}</span>
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                  <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
+                  <span className="truncate">{CONTACT_LOCATION}</span>
                 </div>
               </div>
             </div>
