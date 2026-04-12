@@ -24,23 +24,23 @@ export function Hero({ lang }: HeroProps) {
   const t = {
     fr: {
       available: "Disponible pour missions full stack & IA appliquee",
-      headline: `${PROFILE_NAME}, developpeur full stack axe produit, automatisation et performance.`,
+      headline: `${PROFILE_NAME}, je conçois des applications web rapides, fiables et orientées résultats.`,
       intro:
-        "Plus de 4 ans d'experience dans la conception, le developpement et le deploiement de solutions metiers. J'interviens de l'analyse a la production avec FastAPI, React, TypeScript et PostgreSQL.",
+        "J'accompagne les entreprises de l'idee a la mise en production: architecture, developpement, integration API et optimisation continue.",
       projects: "Voir les projets",
       downloadCv: "Telecharger le CV",
       quickLinks: "Liens rapides",
       email: "Envoyer un email",
       role: "Développeur Full Stack Senior",
-      contactInfo: "Coordonnées",
+      contactInfo: "Coordonnees",
       strongDomains:
-        "Domaines forts: ERP metier, plateformes photovoltaiques, workflows automatises, integration API et generation dynamique de documents PDF.",
+        "Specialites: ERP metier, plateformes photovoltaiques, automatisation de workflows, integration de services tiers et generation de PDF dynamiques.",
     },
     en: {
       available: "Open to full stack and applied AI opportunities",
-      headline: `${PROFILE_NAME}, full stack developer focused on product, automation, and performance.`,
+      headline: `${PROFILE_NAME}, I build fast, reliable web apps focused on real business outcomes.`,
       intro:
-        "4+ years building and shipping business software, from architecture to production. I work across FastAPI, React, TypeScript, and PostgreSQL.",
+        "I help teams move from idea to production with scalable architecture, clean implementation, API integrations, and continuous optimization.",
       projects: "View projects",
       downloadCv: "Download resume",
       quickLinks: "Quick links",
@@ -48,7 +48,7 @@ export function Hero({ lang }: HeroProps) {
       role: "Senior Full Stack Developer",
       contactInfo: "Contact details",
       strongDomains:
-        "Strong areas: business ERP, photovoltaic platforms, workflow automation, API integration, and dynamic PDF document generation.",
+        "Focus areas: business ERP, photovoltaic platforms, workflow automation, third-party service integration, and dynamic PDF generation.",
     },
   } as const;
 
@@ -108,6 +108,10 @@ export function Hero({ lang }: HeroProps) {
 
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t[lang].intro}
+          </p>
+
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-base">
+            {t[lang].strongDomains}
           </p>
 
           <div className="stagger-grid mt-6 flex flex-wrap gap-2">
@@ -173,20 +177,6 @@ export function Hero({ lang }: HeroProps) {
             </div>
           </div>
 
-          <div className="mt-7 flex flex-wrap gap-5 text-sm text-slate-600 dark:text-slate-300">
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-blue-600" />
-              <span>{CONTACT_PHONE_DISPLAY}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-blue-600" />
-              <span>{CONTACT_EMAIL}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-blue-600" />
-              <span>{CONTACT_LOCATION}</span>
-            </div>
-          </div>
         </div>
 
         <div 
@@ -224,61 +214,23 @@ export function Hero({ lang }: HeroProps) {
               </div>
             </div>
 
-            {/* Social and contact links */}
-            <div className="mt-8 grid grid-cols-2 gap-3">
-              <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md transition-all duration-300"
-              >
-                <GitBranch className="h-5 w-5 text-slate-700 dark:text-slate-300" />
-                <span className="font-medium text-slate-700 dark:text-slate-300">GitHub</span>
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-60 transition-opacity" />
-              </a>
-              
-              <a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md transition-all duration-300"
-              >
-                <GitBranch className="h-5 w-5 text-slate-700 dark:text-slate-300" />
-                <span className="font-medium text-slate-700 dark:text-slate-300">LinkedIn</span>
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-60 transition-opacity" />
-              </a>
-            </div>
-
-            {/* Contact details */}
-            <div className="mt-6 space-y-3 p-4 bg-slate-50/80 dark:bg-slate-800/50 rounded-xl backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+            <div className="mt-6 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                 {t[lang].contactInfo}
               </p>
-              
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <Phone className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <span className="font-mono">{CONTACT_PHONE_DISPLAY}</span>
+              <div className="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-2.5">
+                  <Phone className="h-4 w-4 text-blue-600" />
+                  <span>{CONTACT_PHONE_DISPLAY}</span>
                 </div>
-                
-                <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <Mail className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <a 
-                    href={`mailto:${CONTACT_EMAIL}`}
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
+                <div className="flex items-center gap-2.5">
+                  <Mail className="h-4 w-4 text-blue-600" />
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-blue-600 dark:hover:text-blue-400">
                     {CONTACT_EMAIL}
                   </a>
                 </div>
-                
-                <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <MapPin className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  </div>
+                <div className="flex items-center gap-2.5">
+                  <MapPin className="h-4 w-4 text-blue-600" />
                   <span>{CONTACT_LOCATION}</span>
                 </div>
               </div>

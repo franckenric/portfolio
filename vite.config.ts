@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: "/portfolio/", // ✅ IMPORTANT
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
