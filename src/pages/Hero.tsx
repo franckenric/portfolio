@@ -180,24 +180,24 @@ export function Hero({ lang }: HeroProps) {
         </div>
 
         <div 
-            className="relative lg:col-span-1 lg:self-start"
+            className="relative w-full lg:col-span-1 lg:self-start overflow-hidden"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: 'transform 0.2s ease-out'
             }}
           >
             <div className="relative group">
-              {/* Decorative elements behind image */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500"></div>
+              {/* Decorative elements behind image - hidden on mobile due to overflow */}
+              <div className="absolute -inset-1 hidden sm:block bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="absolute -inset-0.5 hidden sm:block bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500"></div>
               
               {/* Profile image container */}
-              <div className="relative bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-1 sm:p-1.5 shadow-2xl">
-                <div className="overflow-hidden rounded-xl sm:rounded-2xl">
+              <div className="relative bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-0.5 sm:p-1 md:p-1.5 shadow-lg sm:shadow-2xl w-full">
+                <div className="overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl">
                   <img
                     src={profilePic}
                     alt={PROFILE_NAME}
-                    className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto max-h-[280px] sm:max-h-[350px] md:max-h-[400px] lg:max-h-[500px] object-cover object-top transition-transform duration-700 group-hover:scale-105 aspect-[3/4]"
                   />
                 </div>
                 
