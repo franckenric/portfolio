@@ -26,7 +26,7 @@ export function Hero({ lang }: HeroProps) {
       available: "Disponible pour missions full stack & IA appliquee",
       headline: `${PROFILE_NAME}, je conçois des applications web rapides, fiables et orientées résultats.`,
       intro:
-        "J'accompagne les entreprises de l'idee a la mise en production: architecture, developpement, integration API et optimisation continue.",
+        "Je suis passionné par la création de solutions digitales élégantes et impactantes. Curieux par nature, créatif par conviction, j'aime transformer les idées complexes en expériences simples et efficaces.",
       projects: "Voir les projets",
       downloadCv: "Telecharger le CV",
       quickLinks: "Liens rapides",
@@ -34,13 +34,13 @@ export function Hero({ lang }: HeroProps) {
       role: "Développeur Full Stack",
       contactInfo: "Coordonnees",
       strongDomains:
-        "Specialites: ERP metier, plateformes photovoltaiques, automatisation de workflows, integration de services tiers et generation de PDF dynamiques.",
+        "Philosophie: Créer de la vraie valeur. Construire avec rigueur. Finir avec excellence. Chaque projet est une opportunité d'apprendre et de surpasser les attentes.",
     },
     en: {
       available: "Open to full stack and applied AI opportunities",
       headline: `${PROFILE_NAME}, I build fast, reliable web apps focused on real business outcomes.`,
       intro:
-        "I help teams move from idea to production with scalable architecture, clean implementation, API integrations, and continuous optimization.",
+        "I'm passionate about crafting elegant, impactful digital solutions. Naturally curious, genuinely creative—I love transforming complex ideas into simple, powerful experiences.",
       projects: "View projects",
       downloadCv: "Download resume",
       quickLinks: "Quick links",
@@ -48,7 +48,7 @@ export function Hero({ lang }: HeroProps) {
       role: "Full Stack Developer",
       contactInfo: "Contact details",
       strongDomains:
-        "Focus areas: business ERP, photovoltaic platforms, workflow automation, third-party service integration, and dynamic PDF generation.",
+        "Philosophy: Create real value. Build with rigor. Deliver with excellence. Every project is an opportunity to learn and exceed expectations.",
     },
   } as const;
 
@@ -95,7 +95,7 @@ export function Hero({ lang }: HeroProps) {
       />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,#93c5fd33,transparent_50%),radial-gradient(circle_at_bottom_left,#06b6d433,transparent_45%)] lg:hidden" />
 
-      <div className="relative mx-auto grid w-full max-w-6xl gap-6 sm:gap-8 lg:gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+      <div className="relative mx-auto grid w-full max-w-6xl gap-6 sm:gap-8 lg:gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start px-0">
         <div className="reveal reveal-delay-1 lg:self-start">
           <Badge variant="outline" className="mb-4 rounded-full border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
             <Sparkles className="mr-1 h-3.5 w-3.5" />
@@ -180,58 +180,58 @@ export function Hero({ lang }: HeroProps) {
         </div>
 
         <div 
-            className="relative w-full lg:col-span-1 lg:self-start overflow-hidden"
+            className="relative w-full sm:max-w-md md:max-w-lg lg:max-w-none"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
               transition: 'transform 0.2s ease-out'
             }}
           >
             <div className="relative group">
-              {/* Decorative elements behind image - hidden on mobile due to overflow */}
+              {/* Decorative elements behind image - hidden on mobile */}
               <div className="absolute -inset-1 hidden sm:block bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
               <div className="absolute -inset-0.5 hidden sm:block bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500"></div>
               
-              {/* Profile image container */}
-              <div className="relative bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-0.5 sm:p-1 md:p-1.5 shadow-lg sm:shadow-2xl w-full">
-                <div className="overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl">
+              {/* Profile image container - proper aspect ratio without crop */}
+              <div className="relative bg-white dark:bg-slate-800 rounded-lg sm:rounded-2xl md:rounded-3xl p-0.5 sm:p-1 md:p-1.5 shadow-lg sm:shadow-2xl">
+                <div className="overflow-hidden rounded-md sm:rounded-xl md:rounded-2xl bg-gray-100 dark:bg-slate-700">
                   <img
                     src={profilePic}
                     alt={PROFILE_NAME}
-                    className="w-full h-auto max-h-[280px] sm:max-h-[350px] md:max-h-[400px] lg:max-h-[500px] object-cover object-top transition-transform duration-700 group-hover:scale-105 aspect-[3/4]"
+                    className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 
-                {/* Overlay info card */}
-                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white">
+                {/* Overlay info card - scales with screen */}
+                <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 md:bottom-4 md:left-4 md:right-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-md sm:rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 shadow-lg border border-slate-200 dark:border-slate-700">
+                  <h3 className="font-bold text-sm sm:text-base md:text-lg text-slate-900 dark:text-white leading-tight">
                     {PROFILE_NAME}
                   </h3>
-                  <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium flex items-center gap-1">
-                    <Briefcase className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                  <p className="text-xs md:text-sm text-blue-600 dark:text-blue-400 font-medium flex items-center gap-0.5 md:gap-1 mt-1">
+                    <Briefcase className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
                     {t[lang].role}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 sm:mt-6 rounded-xl sm:rounded-2xl border border-slate-200 bg-white/90 p-3 sm:p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
-              <p className="mb-2.5 sm:mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            <div className="mt-3 sm:mt-4 md:mt-6 rounded-lg sm:rounded-xl md:rounded-2xl border border-slate-200 bg-white/90 p-2.5 sm:p-3 md:p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
+              <p className="mb-2 sm:mb-2.5 md:mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                 {t[lang].contactInfo}
               </p>
-              <div className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                  <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
-                  <span className="truncate">{CONTACT_PHONE_DISPLAY}</span>
+              <div className="space-y-1.5 sm:space-y-2 md:space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
+                  <Phone className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-blue-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">{CONTACT_PHONE_DISPLAY}</span>
                 </div>
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                  <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="truncate transition-colors hover:text-blue-600 dark:hover:text-blue-400">
+                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
+                  <Mail className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-blue-600 flex-shrink-0" />
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-blue-600 dark:hover:text-blue-400 text-xs sm:text-sm word-break">
                     {CONTACT_EMAIL}
                   </a>
                 </div>
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                  <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
-                  <span className="truncate">{CONTACT_LOCATION}</span>
+                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
+                  <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-blue-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">{CONTACT_LOCATION}</span>
                 </div>
               </div>
             </div>
