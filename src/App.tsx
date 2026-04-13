@@ -1,6 +1,6 @@
 
 import { useEffect, useMemo, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, Moon, Sun, X } from 'lucide-react'
 import { Hero } from './pages/Hero'
 import { Experience } from './pages/Experience'
 import { Projects } from './pages/Projects'
@@ -9,11 +9,28 @@ import { Education } from './pages/Education'
 import { Contact } from './pages/Contact'
 
 type Lang = 'fr' | 'en'
+type Theme = 'light' | 'dark'
 
 const PROFILE_NAME = import.meta.env.VITE_PROFILE_NAME || 'Henri Franck'
 
+const THEME_STORAGE_KEY = 'portfolio-theme'
+
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') {
+    return 'light'
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+  if (storedTheme === 'light' || storedTheme === 'dark') {
+    return storedTheme
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function App() {
   const [lang, setLang] = useState<Lang>('fr')
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [activeSection, setActiveSection] = useState('hero')
@@ -27,6 +44,13 @@ function App() {
     fr: { experience: 'Experience', projects: 'Projets', skills: 'Competences', education: 'Formation', contact: 'Contact' },
     en: { experience: 'Experience', projects: 'Projects', skills: 'Skills', education: 'Education', contact: 'Contact' },
   } as const
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.classList.toggle('dark', theme === 'dark')
+    root.style.colorScheme = theme
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
+  }, [theme])
 
   useEffect(() => {
     const onScroll = () => {
@@ -102,29 +126,40 @@ function App() {
             <a href="#education" className={navItemClass('education')}>{nav[lang].education}</a>
             <a href="#contact" className={navItemClass('contact')}>{nav[lang].contact}</a>
           </div>
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className="rounded-md p-2 text-slate-700 transition hover:bg-slate-100 md:hidden dark:text-slate-200 dark:hover:bg-slate-800"
-            aria-label="Open navigation"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-          <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900">
+          <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => setLang('fr')}
-              className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${lang === 'fr' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-blue-600 dark:text-slate-300'}`}
+              onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-900 dark:hover:text-blue-300"
+              aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             >
-              FR
+              {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+              {theme === 'dark' ? 'Light' : 'Dark'}
             </button>
             <button
               type="button"
-              onClick={() => setLang('en')}
-              className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${lang === 'en' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-blue-600 dark:text-slate-300'}`}
+              onClick={() => setMobileOpen(true)}
+              className="rounded-md p-2 text-slate-700 transition hover:bg-slate-100 md:hidden dark:text-slate-200 dark:hover:bg-slate-800"
+              aria-label="Open navigation"
             >
-              EN
+              <Menu className="h-5 w-5" />
             </button>
+            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900">
+              <button
+                type="button"
+                onClick={() => setLang('fr')}
+                className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${lang === 'fr' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-blue-600 dark:text-slate-300'}`}
+              >
+                FR
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${lang === 'en' ? 'bg-blue-600 text-white' : 'text-slate-600 hover:text-blue-600 dark:text-slate-300'}`}
+              >
+                EN
+              </button>
+            </div>
           </div>
         </nav>
       </header>
@@ -147,6 +182,16 @@ function App() {
             <X className="h-5 w-5" />
           </button>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+          className="mb-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 transition hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-900 dark:hover:text-blue-300"
+          aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+        >
+          {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        </button>
 
         <div className="flex flex-col gap-1 text-sm">
           <a href="#experience" onClick={() => setMobileOpen(false)} className={`rounded-md px-3 py-2 transition ${activeSection === 'experience' ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800'}`}>{nav[lang].experience}</a>
