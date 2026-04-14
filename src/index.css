@@ -270,15 +270,15 @@ code {
   .reveal {
     opacity: 0;
     transform: translateY(14px);
-    animation: fade-up 700ms ease-out forwards;
+    animation: fade-up 680ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
   }
 
   .reveal-delay-1 {
-    animation-delay: 120ms;
+    animation-delay: 100ms;
   }
 
   .reveal-delay-2 {
-    animation-delay: 220ms;
+    animation-delay: 180ms;
   }
 
   .float-slow {
@@ -287,6 +287,82 @@ code {
 
   .pulse-soft {
     animation: pulse-soft 2.8s ease-in-out infinite;
+  }
+
+  .section-enter-left {
+    opacity: 0;
+    transform: translateX(-22px);
+    animation: slide-in-left 820ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .section-enter-right {
+    opacity: 0;
+    transform: translateX(22px);
+    animation: slide-in-right 820ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .section-enter-zoom {
+    opacity: 0;
+    transform: scale(0.97) translateY(10px);
+    animation: zoom-in-soft 760ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .section-enter-blur {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(10px);
+    animation: blur-up-in 860ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .section-enter-pop {
+    opacity: 0;
+    transform: scale(0.94);
+    animation: pop-in 740ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .timeline-card {
+    transform-origin: left center;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .timeline-card:hover {
+    transform: translateY(-4px) rotate(-0.25deg);
+  }
+
+  .project-card {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px) rotate(0.45deg);
+  }
+
+  .skill-card {
+    transition: transform 280ms ease, border-color 280ms ease;
+  }
+
+  .skill-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(59, 130, 246, 0.55);
+  }
+
+  .education-card {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .education-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 30px -18px rgba(15, 23, 42, 0.35);
+  }
+
+  .contact-card {
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px -22px rgba(37, 99, 235, 0.42);
+    border-color: rgba(59, 130, 246, 0.5);
   }
 }
 
@@ -348,26 +424,26 @@ code {
 .stagger-grid > * {
   opacity: 0;
   transform: translateY(14px);
-  animation: fade-up 620ms ease-out forwards;
+  animation: fade-up 660ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 .stagger-grid > *:nth-child(1) {
-  animation-delay: 70ms;
+  animation-delay: 90ms;
 }
 .stagger-grid > *:nth-child(2) {
-  animation-delay: 130ms;
+  animation-delay: 170ms;
 }
 .stagger-grid > *:nth-child(3) {
-  animation-delay: 190ms;
-}
-.stagger-grid > *:nth-child(4) {
   animation-delay: 250ms;
 }
+.stagger-grid > *:nth-child(4) {
+  animation-delay: 330ms;
+}
 .stagger-grid > *:nth-child(5) {
-  animation-delay: 310ms;
+  animation-delay: 410ms;
 }
 .stagger-grid > *:nth-child(6) {
-  animation-delay: 370ms;
+  animation-delay: 490ms;
 }
 
 .soft-spotlight {
@@ -410,5 +486,46 @@ code {
 
   50% {
     opacity: 0.7;
+  }
+}
+
+@keyframes slide-in-left {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoom-in-soft {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes blur-up-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes pop-in {
+  70% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }

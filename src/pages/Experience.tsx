@@ -97,7 +97,7 @@ export function Experience({ lang }: ExperienceProps) {
   } as const
 
   return (
-    <section id="experience" className="reveal reveal-delay-1 section-frame bg-white px-4 py-20 dark:bg-slate-900">
+    <section id="experience" className="section-enter-left section-frame bg-white px-4 py-20 dark:bg-slate-900">
       <div className="max-w-5xl mx-auto">
         <div className="mb-12 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{t[lang].section}</p>
@@ -119,7 +119,7 @@ export function Experience({ lang }: ExperienceProps) {
                 <BriefcaseBusiness className="h-3 w-3 text-blue-600" />
               </div>
 
-              <Card className="card-lift relative overflow-hidden border-slate-200 bg-gradient-to-b from-white to-slate-50/80 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:to-slate-900/30">
+              <Card className="card-lift timeline-card relative overflow-hidden border-slate-200 bg-gradient-to-b from-white to-slate-50/80 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:to-slate-900/30">
                 <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-cyan-500 to-blue-600" />
                 <CardHeader>
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">

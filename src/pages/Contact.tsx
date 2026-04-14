@@ -122,7 +122,7 @@ export function Contact({ lang }: ContactProps) {
   }
 
   return (
-    <section id="contact" className="reveal reveal-delay-2 section-frame bg-white px-4 py-20 dark:bg-slate-900">
+    <section id="contact" className="section-enter-pop section-frame bg-white px-4 py-20 dark:bg-slate-900">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{t[lang].section}</p>
@@ -135,7 +135,7 @@ export function Contact({ lang }: ContactProps) {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <Card className="card-lift reveal border-slate-200 shadow-sm dark:border-slate-800" style={{ animationDelay: '110ms' }}>
+          <Card className="card-lift contact-card reveal border-slate-200 shadow-sm dark:border-slate-800" style={{ animationDelay: '110ms' }}>
             <CardHeader>
               <CardTitle>{t[lang].infoTitle}</CardTitle>
               <CardDescription>{t[lang].infoDesc}</CardDescription>
@@ -184,7 +184,7 @@ export function Contact({ lang }: ContactProps) {
             </CardContent>
           </Card>
 
-          <Card className="card-lift reveal border-slate-200 shadow-sm dark:border-slate-800" style={{ animationDelay: '190ms' }}>
+          <Card className="card-lift contact-card reveal border-slate-200 shadow-sm dark:border-slate-800" style={{ animationDelay: '190ms' }}>
             <CardHeader>
               <CardTitle>{t[lang].formTitle}</CardTitle>
               <CardDescription>{t[lang].formDesc}</CardDescription>

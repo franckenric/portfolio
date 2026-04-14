@@ -101,7 +101,7 @@ export function Skills({ lang }: SkillsProps) {
   } as const
 
   return (
-    <section id="skills" className="reveal reveal-delay-2 section-frame bg-white px-4 py-20 dark:bg-slate-900">
+    <section id="skills" className="section-enter-zoom section-frame bg-white px-4 py-20 dark:bg-slate-900">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{t[lang].section}</p>
@@ -115,7 +115,7 @@ export function Skills({ lang }: SkillsProps) {
 
         <div className="stagger-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, index) => (
-            <Card key={index} className="card-lift border-slate-200 dark:border-slate-800">
+            <Card key={index} className="card-lift skill-card border-slate-200 dark:border-slate-800">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <category.icon className="h-5 w-5 text-blue-600" />

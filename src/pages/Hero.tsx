@@ -1,7 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ArrowUpRight, Briefcase, GitBranch, Globe, Mail, MapPin, Phone, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Briefcase,
+  GitBranch,
+  Globe,
+  Mail,
+  MapPin,
+  Phone,
+  Sparkles,
+} from "lucide-react";
 import cvFile from "@/assets/CV_Developer.pdf";
 import profilePic from "@/assets/pic.jpg";
 
@@ -9,235 +18,282 @@ type HeroProps = {
   lang: "fr" | "en";
 };
 
-const PROFILE_NAME = import.meta.env.VITE_PROFILE_NAME || 'Henri Franck';
-const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'enricfrank@gmail.com';
-const CONTACT_PHONE_DISPLAY = import.meta.env.VITE_CONTACT_PHONE_DISPLAY || '+261 38 17 591 93';
-const CONTACT_LOCATION = import.meta.env.VITE_CONTACT_LOCATION || 'Antananarivo, Madagascar';
-const GITHUB_URL = import.meta.env.VITE_GITHUB_URL || 'https://github.com/enricfrank';
-const LINKEDIN_URL = import.meta.env.VITE_LINKEDIN_URL || 'https://linkedin.com/in/henri-franck';
+const PROFILE_NAME = import.meta.env.VITE_PROFILE_NAME || "Henri Franck";
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || "enricfrank@gmail.com";
+const CONTACT_PHONE_DISPLAY =
+  import.meta.env.VITE_CONTACT_PHONE_DISPLAY || "+261 38 17 591 93";
+const CONTACT_LOCATION =
+  import.meta.env.VITE_CONTACT_LOCATION || "Antananarivo, Madagascar";
+const GITHUB_URL =
+  import.meta.env.VITE_GITHUB_URL || "https://github.com/enricfrank";
+const LINKEDIN_URL =
+  import.meta.env.VITE_LINKEDIN_URL || "https://linkedin.com/in/henri-franck";
+
+const SKILLS = [
+  "React",
+  "TypeScript",
+  "Node.js",
+  "FastAPI",
+  "PostgreSQL",
+  "Docker",
+  "Tailwind",
+  "AWS",
+];
+
+const translations = {
+  fr: {
+    available: "Disponible pour missions Full Stack et IA appliquee",
+    titleLine2: "Je conçois des experiences web rapides, fiables et memorables.",
+    rotatingPhrases: [
+      { prefix: "Salut, moi c'est ", highlight: PROFILE_NAME, suffix: "." },
+      {
+        prefix: "Je transforme ",
+        highlight: "vos idees en produits digitaux",
+        suffix: ", avec clarte et impact.",
+      },
+      { prefix: "Objectif: ", highlight: "un produit utile des la premiere version", suffix: "." },
+    ],
+    intro:
+      "Developpeur Full Stack oriente produit: je construis des applications modernes, evolutives et simples a utiliser.",
+    role: "Developpeur Full Stack",
+    primaryCta: "Decouvrir mes projets",
+    secondaryCta: "Consulter mon CV",
+    contactLabel: "Contact",
+    stackLabel: "Technologies principales",
+    nowLabel: "Ouvert aux missions freelance, CDD et CDI.",
+    locationLabel: "Localisation",
+  },
+  en: {
+    available: "Available for Full Stack and Applied AI opportunities",
+    titleLine2: "I craft web experiences that are fast, dependable, and memorable.",
+    rotatingPhrases: [
+      { prefix: "Hi, I'm ", highlight: PROFILE_NAME, suffix: "." },
+      {
+        prefix: "I turn ",
+        highlight: "ideas into digital products",
+        suffix: ", with clarity and impact.",
+      },
+      { prefix: "Goal: ", highlight: "deliver value from the very first release", suffix: "." },
+    ],
+    intro:
+      "Product-minded Full Stack developer building modern, scalable applications that people enjoy using.",
+    role: "Full Stack Developer",
+    primaryCta: "Explore my projects",
+    secondaryCta: "View my resume",
+    contactLabel: "Contact",
+    stackLabel: "Core technologies",
+    nowLabel: "Open to freelance and full-time opportunities.",
+    locationLabel: "Location",
+  },
+} as const;
 
 export function Hero({ lang }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const t = translations[lang];
+  const [activeLineIndex, setActiveLineIndex] = useState(0);
+  const [typedLength, setTypedLength] = useState(0);
 
-  const t = {
-    fr: {
-      available: "Disponible pour missions full stack & IA appliquee",
-      headline: `${PROFILE_NAME}, je conçois des applications web rapides, fiables et orientées résultats.`,
-      intro:
-        "Je suis passionné par la création de solutions digitales élégantes et impactantes. Curieux par nature, créatif par conviction, j'aime transformer les idées complexes en expériences simples et efficaces.",
-      projects: "Voir les projets",
-      downloadCv: "Telecharger le CV",
-      quickLinks: "Liens rapides",
-      email: "Envoyer un email",
-      role: "Développeur Full Stack",
-      contactInfo: "Coordonnees",
-      strongDomains:
-        "Philosophie: Créer de la vraie valeur. Construire avec rigueur. Finir avec excellence. Chaque projet est une opportunité d'apprendre et de surpasser les attentes.",
-    },
-    en: {
-      available: "Open to full stack and applied AI opportunities",
-      headline: `${PROFILE_NAME}, I build fast, reliable web apps focused on real business outcomes.`,
-      intro:
-        "I'm passionate about crafting elegant, impactful digital solutions. Naturally curious, genuinely creative—I love transforming complex ideas into simple, powerful experiences.",
-      projects: "View projects",
-      downloadCv: "Download resume",
-      quickLinks: "Quick links",
-      email: "Send email",
-      role: "Full Stack Developer",
-      contactInfo: "Contact details",
-      strongDomains:
-        "Philosophy: Create real value. Build with rigor. Deliver with excellence. Every project is an opportunity to learn and exceed expectations.",
-    },
-  } as const;
+  useEffect(() => {
+    let lineIndex = 0;
+    let index = 0;
+    let isDeleting = false;
+    let timerId = 0;
 
- useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    setActiveLineIndex(0);
+    setTypedLength(0);
 
-    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (!isDesktop || prefersReducedMotion) return;
+    const tick = () => {
+      const phrase = t.rotatingPhrases[lineIndex];
+      const fullText = `${phrase.prefix}${phrase.highlight}${phrase.suffix}`;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const { left, top, width, height } = container.getBoundingClientRect();
-      const relativeX = (e.clientX - left) / width;
-      const relativeY = (e.clientY - top) / height;
-      
-      setMousePosition({ 
-        x: (relativeX - 0.5) * 30, 
-        y: (relativeY - 0.5) * 20 
-      });
+      if (!isDeleting) {
+        index += 1;
+        setTypedLength(index);
+
+        if (index === fullText.length) {
+          isDeleting = true;
+          timerId = window.setTimeout(tick, 1200);
+          return;
+        }
+
+        timerId = window.setTimeout(tick, 110);
+        return;
+      }
+
+      index -= 1;
+      setTypedLength(index);
+
+      if (index === 0) {
+        isDeleting = false;
+        lineIndex = (lineIndex + 1) % t.rotatingPhrases.length;
+        setActiveLineIndex(lineIndex);
+        timerId = window.setTimeout(tick, 350);
+        return;
+      }
+
+      timerId = window.setTimeout(tick, 70);
     };
 
-    const resetPosition = () => setMousePosition({ x: 0, y: 0 });
-
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', resetPosition);
+    timerId = window.setTimeout(tick, 500);
 
     return () => {
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('mouseleave', resetPosition);
+      window.clearTimeout(timerId);
     };
-  }, []);
+  }, [t.rotatingPhrases]);
+
+  const activePhrase = t.rotatingPhrases[activeLineIndex];
+  const prefixVisible = activePhrase.prefix.slice(
+    0,
+    Math.min(typedLength, activePhrase.prefix.length)
+  );
+  const highlightStart = activePhrase.prefix.length;
+  const highlightVisible = activePhrase.highlight.slice(
+    0,
+    Math.max(0, Math.min(typedLength - highlightStart, activePhrase.highlight.length))
+  );
+  const suffixStart = highlightStart + activePhrase.highlight.length;
+  const suffixVisible = activePhrase.suffix.slice(
+    0,
+    Math.max(0, Math.min(typedLength - suffixStart, activePhrase.suffix.length))
+  );
 
   return (
-    <section ref={containerRef} id="hero" className="reveal section-frame soft-spotlight relative overflow-hidden px-4 pb-12 pt-12 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24 lg:pb-20 lg:pt-28">
-      <div
-        className="pointer-events-none absolute inset-0 hidden transition-transform duration-300 lg:block"
-        style={{
-          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-          backgroundImage:
-            'radial-gradient(circle at top right, #93c5fd33, transparent 50%), radial-gradient(circle at bottom left, #06b6d433, transparent 45%)',
-        }}
-      />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,#93c5fd33,transparent_50%),radial-gradient(circle_at_bottom_left,#06b6d433,transparent_45%)] lg:hidden" />
+    <section
+      id="hero"
+      aria-label="Hero section"
+      className="section-enter-pop relative overflow-hidden px-4 pb-14 pt-10 sm:pb-20 sm:pt-14 lg:pb-24"
+    >
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-300/30 blur-3xl dark:bg-cyan-700/20" />
+        <div className="absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl dark:bg-blue-800/20" />
+      </div>
 
-      <div className="relative mx-auto grid w-full max-w-6xl gap-6 sm:gap-8 lg:gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start px-0">
-        <div className="reveal reveal-delay-1 lg:self-start">
-          <Badge variant="outline" className="mb-4 rounded-full border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
-            <Sparkles className="mr-1 h-3.5 w-3.5" />
-            {t[lang].available}
+      <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="space-y-6">
+          <Badge
+            variant="outline"
+            className="w-fit border-cyan-200 bg-cyan-50/90 text-cyan-700 dark:border-cyan-900 dark:bg-cyan-950/40 dark:text-cyan-300"
+          >
+            <Sparkles className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
+            {t.available}
           </Badge>
 
-          <h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            {t[lang].headline}
-          </h1>
-
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base md:text-lg">
-            {t[lang].intro}
-          </p>
-
-          <p className="mt-3 max-w-2xl text-xs leading-relaxed text-slate-500 dark:text-slate-400 sm:text-sm md:text-base">
-            {t[lang].strongDomains}
-          </p>
-
-          <div className="stagger-grid mt-5 flex flex-wrap gap-1.5 sm:gap-2">
-            <Badge variant="secondary">FastAPI</Badge>
-            <Badge variant="secondary">React</Badge>
-            <Badge variant="secondary">TypeScript</Badge>
-            <Badge variant="secondary">PostgreSQL</Badge>
-            <Badge variant="secondary">Docker</Badge>
-            <Badge variant="secondary">Automation</Badge>
+          <div className="space-y-3">
+            <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl lg:text-6xl">
+              <span>{prefixVisible}</span>
+              <span className="text-cyan-600 dark:text-cyan-400">{highlightVisible}</span>
+              <span className="ml-1 inline-block h-[1em] w-[2px] animate-pulse bg-cyan-600 align-[-0.12em] dark:bg-cyan-400" />
+              <span>{suffixVisible}</span>
+            </h1>
+            <p className="text-balance text-lg font-medium text-slate-700 dark:text-slate-300 sm:text-xl">
+              {t.titleLine2}
+            </p>
+            <p className="max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
+              {t.intro}
+            </p>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3">
-            <Button asChild className="gap-2 rounded-full text-sm sm:text-base">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild className="group rounded-full px-5">
               <a href="#projects">
-                {t[lang].projects}
-                <ArrowRight className="h-4 w-4" />
+                {t.primaryCta}
+                <ArrowRight
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
               </a>
             </Button>
-            <Button variant="outline" asChild className="rounded-full text-sm sm:text-base">
-              <a href={cvFile} target="_blank" rel="noreferrer">{t[lang].downloadCv}</a>
+            <Button variant="outline" asChild className="rounded-full px-5">
+              <a href={cvFile} target="_blank" rel="noopener noreferrer">
+                {t.secondaryCta}
+              </a>
             </Button>
           </div>
 
-          <div className="mt-5 pb-4 sm:pb-8">
-            {/* <p className="mb-3 text-xs uppercase tracking-[0.2em] text-slate-500">{t[lang].quickLinks}</p> */}
-            <div className="grid gap-1.5 sm:gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-700 dark:hover:text-blue-300"
-              >
-                <span className="flex items-center gap-2">
-                  <GitBranch className="h-4 w-4" />
-                  GitHub
+          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              {t.stackLabel}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SKILLS.map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                >
+                  {skill}
                 </span>
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-60 transition group-hover:opacity-100" />
-              </a>
-
-              <a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-700 dark:hover:text-blue-300"
-              >
-                <span className="flex items-center gap-2">
-                  <Globe className="h-4 w-4" />
-                  LinkedIn
-                </span>
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-60 transition group-hover:opacity-100" />
-              </a>
-
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-700 dark:hover:text-blue-300"
-              >
-                <span className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  {t[lang].email}
-                </span>
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-60 transition group-hover:opacity-100" />
-              </a>
+              ))}
             </div>
           </div>
-
         </div>
 
-        <div 
-            className="relative w-full sm:max-w-md md:max-w-lg lg:max-w-none"
-            style={{
-              transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-              transition: 'transform 0.2s ease-out'
-            }}
-          >
-            <div className="relative group">
-              {/* Decorative elements behind image - hidden on mobile */}
-              <div className="absolute -inset-1 hidden sm:block bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-              <div className="absolute -inset-0.5 hidden sm:block bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500"></div>
-              
-              {/* Profile image container - proper aspect ratio without crop */}
-              <div className="relative bg-white dark:bg-slate-800 rounded-lg sm:rounded-2xl md:rounded-3xl p-0.5 sm:p-1 md:p-1.5 shadow-lg sm:shadow-2xl">
-                <div className="overflow-hidden rounded-md sm:rounded-xl md:rounded-2xl bg-gray-100 dark:bg-slate-700">
-                  <img
-                    src={profilePic}
-                    alt={PROFILE_NAME}
-                    className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                
-                {/* Overlay info card - scales with screen */}
-                <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 md:bottom-4 md:left-4 md:right-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-md sm:rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 shadow-lg border border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-sm sm:text-base md:text-lg text-slate-900 dark:text-white leading-tight">
+        <aside className="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900">
+            <img
+              src={profilePic}
+              alt={`${PROFILE_NAME} portrait`}
+              className="h-full w-full object-cover"
+              loading="eager"
+              width="640"
+              height="700"
+            />
+
+            <div className="space-y-4 p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                     {PROFILE_NAME}
-                  </h3>
-                  <p className="text-xs md:text-sm text-blue-600 dark:text-blue-400 font-medium flex items-center gap-0.5 md:gap-1 mt-1">
-                    <Briefcase className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
-                    {t[lang].role}
+                  </h2>
+                  <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400">
+                    <Briefcase className="h-3.5 w-3.5" aria-hidden="true" />
+                    {t.role}
                   </p>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-3 sm:mt-4 md:mt-6 rounded-lg sm:rounded-xl md:rounded-2xl border border-slate-200 bg-white/90 p-2.5 sm:p-3 md:p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
-              <p className="mb-2 sm:mb-2.5 md:mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
-                {t[lang].contactInfo}
-              </p>
-              <div className="space-y-1.5 sm:space-y-2 md:space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
-                  <Phone className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-blue-600 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm">{CONTACT_PHONE_DISPLAY}</span>
-                </div>
-                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
-                  <Mail className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-blue-600 flex-shrink-0" />
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-blue-600 dark:hover:text-blue-400 text-xs sm:text-sm word-break">
-                    {CONTACT_EMAIL}
-                  </a>
-                </div>
-                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
-                  <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-blue-600 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm">{CONTACT_LOCATION}</span>
-                </div>
+              <div className="space-y-2.5 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/80">
+                <p className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                  <Phone className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                  {CONTACT_PHONE_DISPLAY}
+                </p>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="inline-flex items-center gap-2 text-sm text-slate-700 transition-colors hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400"
+                >
+                  <Mail className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                  {CONTACT_EMAIL}
+                </a>
+                <p className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                  <MapPin className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                  {t.locationLabel}: {CONTACT_LOCATION}
+                </p>
               </div>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-blue-800 dark:hover:text-blue-300"
+                >
+                  <GitBranch className="h-3.5 w-3.5" />
+                  GitHub
+                </a>
+                <a
+                  href={LINKEDIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-blue-800 dark:hover:text-blue-300"
+                >
+                  <Globe className="h-3.5 w-3.5" />
+                  LinkedIn
+                </a>
+              </div>
+
+              <p className="text-xs text-slate-500 dark:text-slate-400">{t.nowLabel}</p>
             </div>
           </div>
-
+        </aside>
       </div>
     </section>
-  )
+  );
 }

@@ -122,7 +122,7 @@ export function Projects({ lang }: ProjectsProps) {
   } as const
 
   return (
-    <section id="projects" className="reveal reveal-delay-1 section-frame soft-spotlight bg-slate-50 px-4 py-20 dark:bg-slate-950">
+    <section id="projects" className="section-enter-right section-frame soft-spotlight bg-slate-50 px-4 py-20 dark:bg-slate-950">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{t[lang].section}</p>
@@ -136,7 +136,7 @@ export function Projects({ lang }: ProjectsProps) {
 
         <div className="stagger-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
-            <Card key={index} className="card-lift flex flex-col border-slate-200 bg-white/95 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/95">
+            <Card key={index} className="card-lift project-card flex flex-col border-slate-200 bg-white/95 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/95">
               <CardHeader>
                 <div className="mb-2">
                   <Badge variant="outline" className="border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-300">

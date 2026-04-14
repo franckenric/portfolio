@@ -68,7 +68,7 @@ export function Education({ lang }: EducationProps) {
   } as const
 
   return (
-    <section id="education" className="reveal reveal-delay-2 section-frame soft-spotlight bg-slate-50 px-4 py-20 dark:bg-slate-950">
+    <section id="education" className="section-enter-blur section-frame soft-spotlight bg-slate-50 px-4 py-20 dark:bg-slate-950">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{t[lang].section}</p>
@@ -82,7 +82,7 @@ export function Education({ lang }: EducationProps) {
 
         <div className="space-y-6">
           {education.map((edu, index) => (
-            <Card key={index} className="card-lift reveal border-slate-200 dark:border-slate-800" style={{ animationDelay: `${index * 90 + 90}ms` }}>
+            <Card key={index} className="card-lift reveal education-card border-slate-200 dark:border-slate-800" style={{ animationDelay: `${index * 90 + 90}ms` }}>
               <CardHeader>
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
                   <div>
