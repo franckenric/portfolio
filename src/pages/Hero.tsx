@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   Briefcase,
+  CheckCircle2,
+  ExternalLink,
   GitBranch,
   Globe,
   Mail,
@@ -19,7 +21,8 @@ type HeroProps = {
 };
 
 const PROFILE_NAME = import.meta.env.VITE_PROFILE_NAME || "Henri Franck";
-const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || "enricfrank@gmail.com";
+const CONTACT_EMAIL =
+  import.meta.env.VITE_CONTACT_EMAIL || "enricfrank@gmail.com";
 const CONTACT_PHONE_DISPLAY =
   import.meta.env.VITE_CONTACT_PHONE_DISPLAY || "+261 38 17 591 93";
 const CONTACT_LOCATION =
@@ -43,21 +46,32 @@ const SKILLS = [
 const translations = {
   fr: {
     available: "Disponible pour missions Full Stack et IA appliquee",
-    titleLine2: "Je conçois des experiences web rapides, fiables et memorables.",
+    titleLine2:
+      "J'allie vision produit et execution technique pour des experiences utiles.",
     rotatingPhrases: [
-      { prefix: "Salut, moi c'est ", highlight: PROFILE_NAME, suffix: "." },
+      { prefix: "Bonjour, je suis ", highlight: PROFILE_NAME, suffix: "." },
       {
         prefix: "Je transforme ",
-        highlight: "vos idees en produits digitaux",
-        suffix: ", avec clarte et impact.",
+        highlight: "des idees complexes en produits clairs",
+        suffix: ", rapides a livrer.",
       },
-      { prefix: "Objectif: ", highlight: "un produit utile des la premiere version", suffix: "." },
+      {
+        prefix: "Objectif: ",
+        highlight: "du resultat mesurable des la V1",
+        suffix: ".",
+      },
     ],
     intro:
-      "Developpeur Full Stack oriente produit: je construis des applications modernes, evolutives et simples a utiliser.",
+      "Developpeur Full Stack oriente impact: je livre des applications modernes, fiables et simples a maintenir.",
     role: "Developpeur Full Stack",
-    primaryCta: "Decouvrir mes projets",
-    secondaryCta: "Consulter mon CV",
+    primaryCta: "Voir mes projets",
+    secondaryCta: "Voir mon CV",
+    valueTitle: "Ce que j'apporte",
+    valuePoints: [
+      "Vision produit + execution technique",
+      "Architecture claire, dette technique controlee",
+      "Livraison rapide avec qualite mesurable",
+    ],
     contactLabel: "Contact",
     stackLabel: "Technologies principales",
     nowLabel: "Ouvert aux missions freelance, CDD et CDI.",
@@ -65,21 +79,32 @@ const translations = {
   },
   en: {
     available: "Available for Full Stack and Applied AI opportunities",
-    titleLine2: "I craft web experiences that are fast, dependable, and memorable.",
+    titleLine2:
+      "I blend product vision with engineering to ship useful experiences.",
     rotatingPhrases: [
-      { prefix: "Hi, I'm ", highlight: PROFILE_NAME, suffix: "." },
+      { prefix: "Hello, I'm ", highlight: PROFILE_NAME, suffix: "." },
       {
         prefix: "I turn ",
-        highlight: "ideas into digital products",
-        suffix: ", with clarity and impact.",
+        highlight: "complex ideas into clear products",
+        suffix: ", fast to deliver.",
       },
-      { prefix: "Goal: ", highlight: "deliver value from the very first release", suffix: "." },
+      {
+        prefix: "Goal: ",
+        highlight: "measurable value from v1",
+        suffix: ".",
+      },
     ],
     intro:
-      "Product-minded Full Stack developer building modern, scalable applications that people enjoy using.",
+      "Impact-focused Full Stack developer building modern, reliable apps that stay easy to evolve.",
     role: "Full Stack Developer",
-    primaryCta: "Explore my projects",
+    primaryCta: "View my projects",
     secondaryCta: "View my resume",
+    valueTitle: "What I deliver",
+    valuePoints: [
+      "Product thinking with strong execution",
+      "Clean architecture, controlled technical debt",
+      "Fast delivery with measurable quality",
+    ],
     contactLabel: "Contact",
     stackLabel: "Core technologies",
     nowLabel: "Open to freelance and full-time opportunities.",
@@ -97,9 +122,6 @@ export function Hero({ lang }: HeroProps) {
     let index = 0;
     let isDeleting = false;
     let timerId = 0;
-
-    setActiveLineIndex(0);
-    setTypedLength(0);
 
     const tick = () => {
       const phrase = t.rotatingPhrases[lineIndex];
@@ -143,17 +165,23 @@ export function Hero({ lang }: HeroProps) {
   const activePhrase = t.rotatingPhrases[activeLineIndex];
   const prefixVisible = activePhrase.prefix.slice(
     0,
-    Math.min(typedLength, activePhrase.prefix.length)
+    Math.min(typedLength, activePhrase.prefix.length),
   );
   const highlightStart = activePhrase.prefix.length;
   const highlightVisible = activePhrase.highlight.slice(
     0,
-    Math.max(0, Math.min(typedLength - highlightStart, activePhrase.highlight.length))
+    Math.max(
+      0,
+      Math.min(typedLength - highlightStart, activePhrase.highlight.length),
+    ),
   );
   const suffixStart = highlightStart + activePhrase.highlight.length;
   const suffixVisible = activePhrase.suffix.slice(
     0,
-    Math.max(0, Math.min(typedLength - suffixStart, activePhrase.suffix.length))
+    Math.max(
+      0,
+      Math.min(typedLength - suffixStart, activePhrase.suffix.length),
+    ),
   );
 
   return (
@@ -180,7 +208,9 @@ export function Hero({ lang }: HeroProps) {
           <div className="space-y-3">
             <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl lg:text-6xl">
               <span>{prefixVisible}</span>
-              <span className="text-cyan-600 dark:text-cyan-400">{highlightVisible}</span>
+              <span className="text-cyan-600 dark:text-cyan-400">
+                {highlightVisible}
+              </span>
               <span className="ml-1 inline-block h-[1em] w-[2px] animate-pulse bg-cyan-600 align-[-0.12em] dark:bg-cyan-400" />
               <span>{suffixVisible}</span>
             </h1>
@@ -207,21 +237,52 @@ export function Hero({ lang }: HeroProps) {
                 {t.secondaryCta}
               </a>
             </Button>
+            <a
+              href={cvFile}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400"
+            >
+              PDF
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/70">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-              {t.stackLabel}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {SKILLS.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-                >
-                  {skill}
-                </span>
-              ))}
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/70">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                {t.valueTitle}
+              </p>
+              <div className="space-y-2.5">
+                {t.valuePoints.map((point) => (
+                  <p
+                    key={point}
+                    className="inline-flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300"
+                  >
+                    <CheckCircle2
+                      className="mt-0.5 h-4 w-4 shrink-0 text-cyan-600 dark:text-cyan-400"
+                      aria-hidden="true"
+                    />
+                    {point}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/70">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                {t.stackLabel}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {SKILLS.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -273,7 +334,7 @@ export function Hero({ lang }: HeroProps) {
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-blue-800 dark:hover:text-blue-300"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-blue-800 dark:hover:text-blue-300"
                 >
                   <GitBranch className="h-3.5 w-3.5" />
                   GitHub
@@ -282,14 +343,16 @@ export function Hero({ lang }: HeroProps) {
                   href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-blue-800 dark:hover:text-blue-300"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-blue-800 dark:hover:text-blue-300"
                 >
                   <Globe className="h-3.5 w-3.5" />
                   LinkedIn
                 </a>
               </div>
 
-              <p className="text-xs text-slate-500 dark:text-slate-400">{t.nowLabel}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {t.nowLabel}
+              </p>
             </div>
           </div>
         </aside>
