@@ -37,6 +37,33 @@ const technologyIcons: Record<string, React.ReactNode> = {
 
 const projects = [
   {
+    name: "Gabbie Boutique",
+    type: {
+      fr: "Projet personnel · En production",
+      en: "Personal project · Live",
+    },
+    description: {
+      fr: "Boutique e-commerce bilingue conçue pour découvrir et rechercher des produits, gérer son panier et son compte client, puis commander avec paiement à la livraison. Le site met aussi en avant la livraison et les retours faciles.",
+      en: "Bilingual e-commerce store for browsing and searching products, managing a cart and customer account, and placing orders with cash on delivery. The storefront also highlights delivery and easy returns.",
+    },
+    impact: {
+      fr: [
+        "Expérience e-commerce",
+        "Panier et compte client",
+        "Paiement à la livraison",
+      ],
+      en: [
+        "E-commerce experience",
+        "Cart and customer account",
+        "Cash on delivery",
+      ],
+    },
+    technologies: [],
+    github: null,
+    demo: "https://gabbieboutique.com/",
+    link: "https://gabbieboutique.com/",
+  },
+  {
     name: "Scolary_v2",
     type: {
       fr: "Projet expérimental",
@@ -46,7 +73,10 @@ const projects = [
       fr: "Système de gestion académique couvrant inscriptions, réinscriptions, notes, documents et workflows de validation, avec rôles fins et assistance IA (synthèse, anomalies, aide à la délibération).",
       en: "Academic management system covering enrollment, grades, documents, and validation workflows, with granular roles and AI-assisted decision support.",
     },
-    impact: ["Workflow Governance", "Role-Based Access", "Assistive AI"],
+    impact: {
+      fr: ["Workflows métier", "Gestion des rôles", "Assistance IA"],
+      en: ["Business workflows", "Role-based access", "AI assistance"],
+    },
     technologies: ["FastAPI", "Angular", "PostgreSQL", "IA", "Python"],
     github: null,
     demo: null,
@@ -62,7 +92,10 @@ const projects = [
       fr: "Outil de génération de projets API complets: FastAPI ou NestJS avec modèles, routes CRUD, migrations et exécution conteneurisée.",
       en: "API generator for FastAPI or NestJS projects with models, CRUD routes, migrations, and containerized execution.",
     },
-    impact: ["Code Generation", "CRUD Scaffolding", "Docker Ready"],
+    impact: {
+      fr: ["Génération de code", "Routes CRUD", "Prêt pour Docker"],
+      en: ["Code generation", "CRUD scaffolding", "Docker ready"],
+    },
     technologies: [
       "FastAPI",
       "NestJS",
@@ -85,7 +118,10 @@ const projects = [
       fr: "Petit service web pour créer un CV basique en ligne: formulaire, modèles simples, export PDF et partage public.",
       en: "Lightweight web app to create a basic online CV: editable form, simple templates, PDF export and public share link.",
     },
-    impact: ["Fast CV creation", "PDF export", "Shareable link"],
+    impact: {
+      fr: ["Création rapide", "Export PDF", "Lien partageable"],
+      en: ["Fast CV creation", "PDF export", "Shareable link"],
+    },
     technologies: ["React", "TypeScript", "Node.js", "PDF Export"],
     github: null,
     demo: "https://cv.projectsready.com/",
@@ -101,21 +137,21 @@ export function Projects({ lang }: ProjectsProps) {
   const t = {
     fr: {
       section: "Portfolio",
-      title: "Projets & Realisations",
+      title: "Projets & réalisations",
       subtitle:
-        "Des solutions de production, des prototypes avances et des projets de recherche appliquee.",
+        "Des produits utilisés en conditions réelles et des outils conçus pour résoudre des problèmes concrets.",
       code: "Code",
-      demo: "Demo",
-      impact: "Impact",
+      demo: "Voir le projet",
+      impact: "Points clés",
     },
     en: {
       section: "Portfolio",
       title: "Projects & Work",
       subtitle:
-        "Production systems, advanced prototypes, and applied research projects.",
+        "Live products and practical tools built to solve real-world problems.",
       code: "Code",
-      demo: "Demo",
-      impact: "Impact",
+      demo: "View live project",
+      impact: "Highlights",
     },
   } as const;
 
@@ -165,7 +201,7 @@ export function Projects({ lang }: ProjectsProps) {
                     {t[lang].impact}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {project.impact.map((item, i) => (
+                    {project.impact[lang].map((item, i) => (
                       <Badge
                         key={i}
                         variant="secondary"
@@ -191,8 +227,16 @@ export function Projects({ lang }: ProjectsProps) {
                 <div className="flex gap-3 mt-4">
                   {project.demo && (
                     <Button variant="ghost" size="sm" asChild>
-                      <a href={project.demo} target="_blank" rel="noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-1" />
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${t[lang].demo}: ${project.name} (opens in a new tab)`}
+                      >
+                        <ExternalLink
+                          className="mr-1 h-4 w-4"
+                          aria-hidden="true"
+                        />
                         {t[lang].demo}
                       </a>
                     </Button>

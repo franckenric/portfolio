@@ -14,7 +14,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import cvFile from "@/assets/CV_Developer.pdf";
-import profilePic from "@/assets/pic.jpg";
+import profilePic from "@/assets/pic.png";
 
 type HeroProps = {
   lang: "fr" | "en";
